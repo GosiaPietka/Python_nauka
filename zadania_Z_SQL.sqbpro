@@ -1,0 +1,65 @@
+SELECT name, price,date FROM product ORDER BY date DESC;
+
+SELECT id,name,city,date FROM customer WHERE name='Katarzyna' AND city='Lublin';
+
+--Wybierz wszystkie dane produktów z tabeli Product, których cena jest większa od 25 lub liczba sztuk jest nie mniejsza niż 5
+SELECT id,name,price,amount,date FROM product WHERE price>25 OR amount>=5;
+
+--Usuwamy z tabeli Product wszystkie produkty których są dwie sztuki
+DELETE FROM product WHERE amount='2';
+
+--Dodajemy do tabeli Product nowy przedmiot o nazwie Apaszka, cenie 35, liczba sztuk: 2 oraz dacie dodania: 2011-02-20
+INSERT INTO product VALUES (9,'Apaszka',35,2,'2011-02-20');
+SELECT * FROM product
+
+--Wybieramy dane użytkownika których imię rozpoczyna się literą M
+SELECT * FROM Customer where name LIKE 'M%';
+
+--Wybierz id, nazwę i cenę produktów z tabeli Product które zawierają w nazwie literę “a”
+SELECT id, name, price  FROM Product where name LIKE '%a%'
+
+--Wybieramy nazwy i ceny produktów których cena wynosi 60 lub 10 lub 25
+SELECT name,price FROM product WHERE price IN (60,10,25);
+
+--Wybieramy nazwę i cenę produktów których cena należy do przedziału 40 do 60
+SELECT name,price FROM product WHERE price BETWEEN 40 AND 60;
+
+--Wybieramy id, nazwę i cenę jednego produktu którego cena jest wyższa niż 20
+SELECT id,name,price FROM product WHERE price>20 LIMIT 1;
+
+--Wybierz id i imię 4 pierwszych klientów korzystając z klauzuli LIMIT
+SELECT id,name FROM customer LIMIT 0,4;
+
+--Liczymy ile produktów jest w tabeli Product
+SELECT COUNT(name) FROM product;
+
+--Wybieramy sumę wszystkich sztuk z tabeli Product
+SELECT SUM(amount) FROM product;
+
+--Znajdź sumę cen jednostkowych wszystkich produktów
+SELECT SUM(price) FROM product;
+
+--Liczymy średnią cenę w tabeli Product
+SELECT AVG(price) FROM Product
+
+--Oblicz średnią liczbę produktów z tabeli Product, których cena jest wyższa od 40
+SELECT AVG(amount) FROM product WHERE price>40;
+
+--Wybieramy id i cenę produktu o najniższej cenie
+SELECT id,MIN(price) FROM product;
+
+--Podaj id produktów z tabeli Order_product wraz z liczbą wszystkich zamówionych sztuk, jeśli liczba ta należy do zbioru {2,4}
+SELECT product_id,SUM(amount) FROM order_product GROUP BY product_id HAVING SUM(amount) IN (2,4);
+
+--Znajdź nazwisko i tytuły książek napisanych przez autora o identyfikatorze 3
+SELECT * FROM titles;
+SELECT * FROM authors;
+
+SELECT authors.surname, titles.title
+FROM authors JOIN titles ON authors.ID=titles.author_id
+WHERE titles.author_id='3';
+
+--Znajdź imiona, nazwiska i tytuły książek napisanych przez autorów o imieniu rozpoczynającym się na “S”
+SELECT authors.name, authors.surname, titles.title
+FROM authors JOIN titles ON authors.ID=titles.author_id
+WHERE authors.name LIKE 'S%';
